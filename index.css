@@ -671,6 +671,34 @@ body {
 }
 
 
+/* sixth template variables  */
+
+#schooltheme[data-theme="charcoal"] {
+  --background: 222, 83%, 5%;
+  --text-base: 0, 0%, 100%;
+  --text-muted: 213, 27%, 84%;
+  --text-inverted:  0, 0%, 100%;
+  --card: 222, 73%, 10%;
+  --shadow:  0, 0%, 100%;
+  --border: 0, 0%, 100%;
+  --overlay: 234, 45%, 56%, .6;
+  --background-inverted: 0, 0%, 100%;
+}
+
+#schooltheme[data-theme="snowfall"] {
+  --background: 0, 0%, 100%;
+  --text-base: 0, 0%, 0%;
+  --text-muted: 240, 5%, 26%;
+  --text-inverted: 0, 0%, 100%;
+  --card: 0, 0%, 100%;
+  --shadow: 234, 44%, 67%;
+  --border: 0, 0%, 0%;
+  --overlay: 234, 45%, 56%, 0.6;
+  --background-inverted: 0, 0%, 100%;
+}
+
+
+
 @layer base {
   * {
     @apply border-border;
