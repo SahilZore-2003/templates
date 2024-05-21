@@ -51,6 +51,7 @@ body {
     --text-base: 217, 19%, 27%;
     --text-muted: 218, 11%, 65%;
     --text-inverted: 0 0% 98%;
+
     /* --card: 0, 0%, 94%; */
     --card: 240, 40%, 98%;
     --shadow: 216, 12%, 84%;
@@ -645,6 +646,31 @@ body {
 
 }
 
+#darklight[data-theme="charcoal"] {
+  --background: 222, 83%, 5%;
+  --text-base: 0, 0%, 100%;
+  --text-muted: 213, 27%, 84%;
+  --text-inverted: 222, 83%, 5%;
+  --card: 222, 73%, 10%;
+  --shadow: 222, 73%, 5%;
+  --border: 0, 0%, 100%;
+  --overlay: 227, 73%, 83%, .8;
+  --background-inverted: 0, 0%, 100%;
+}
+
+#darklight[data-theme="snowfall"] {
+  --background: 0, 0%, 100%;
+  --text-base: 0, 0%, 0%;
+  --text-muted: 215, 28%, 17%;
+  --text-inverted: 0, 0%, 100%;
+  --card: 210, 40%, 96%;
+  --shadow: 0, 0%, 20%;
+  --border: 0, 0%, 0%;
+  --overlay: 227, 63%, 38%, 0.75;
+  --background-inverted: 0, 0%, 100%;
+}
+
+
 @layer base {
   * {
     @apply border-border;
@@ -905,7 +931,7 @@ body {
 
 .slides .slick-arrow.slick-next,
 .slides .slick-arrow.slick-prev {
-  background-color: #b3c1f3;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -920,27 +946,10 @@ body {
   display: none;
 }
 
-.slick-dots.header-dots li button {
-  background-color: #dbdbdb;
-  width: 12px;
-  height: 12px;
-  transition: all .5s linear;
-}
 
-.slick-dots.header-dots li.slick-active button {
-  background-color: #dbdbdb;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: #b3c1f3;
-}
 
-.slick-dots.header-dots li button::before {
-  display: none;
-}
 
 @media (min-width:768px) {
-
   .header-slider-tdl .slick-track {
     display: flex;
     gap: 30px;
