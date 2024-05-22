@@ -4,13 +4,18 @@ import { CONST } from "../../config";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import StarRating from "../../components/StarRating";
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
-} from "@/components/ui/carousel";
+import AwesomeSlider from 'react-awesome-slider';
+import "react-awesome-slider/dist/styles.css";
+import 'react-awesome-slider/dist/custom-animations/fold-out-animation.css';
+
+
+// import {
+//     Carousel,
+//     CarouselContent,
+//     CarouselItem,
+//     CarouselNext,
+//     CarouselPrevious,
+// } from "@/components/ui/carousel";
 import {
     setContent,
     setCurrFont,
@@ -37,6 +42,7 @@ import {
 import { Collapse } from "react-collapse";
 import Counter from "../../components/Counter";
 import { InView } from "react-intersection-observer"
+
 
 const sections = [
     {
@@ -103,6 +109,10 @@ const DarkLightTemplate = () => {
     const [nav2, setNav2] = useState(null);
     const [activeSlide, setActiveSlide] = useState(0);
     const [activeBanner, setActiveBanner] = useState(0);
+    const [width, setWidth] = useState(window.innerWidth || document.documentElement.clientWidth)
+    const [showLeftTab, setShowLeftTab] = useState(false)
+    const [showRightTab, setShowRightTab] = useState(true)
+    const [draging, setDraging] = useState(false)
 
     let sliderRef = useRef(null);
     let featuredRef = useRef(null)
@@ -111,6 +121,13 @@ const DarkLightTemplate = () => {
     const inlineStyle = {
         fontFamily: currFont,
     };
+
+    function handleWindowSizeChange() {
+        setWidth(window.innerWidth);
+    }
+
+
+
 
 
 
@@ -421,25 +438,27 @@ const DarkLightTemplate = () => {
             {
                 title: "Banner1",
                 link: "https://dukaan.b-cdn.net/1440x1440/webp/upload_file_service/11ce5eba-e62a-41b0-93a4-7a34361b4740/image.png",
-                mobile: "https://dukaan.b-cdn.net/800x800/webp/upload_file_service/e7b49fea-f9e9-4e66-9302-0811f6669476/image.png",
+
 
                 _id: "65f6fd204c4327f063440e59",
             },
             {
-                title: "Banner1",
+                title: "Banner2",
                 link: "https://dukaan.b-cdn.net/1440x1440/webp/upload_file_service/07c5a500-b76e-490d-9c42-33985d32f329/image.png",
-                mobile: "http://res.cloudinary.com/dwmwpmrpo/image/upload/v1715756157/k30kyrtxfnqflcwjwrsq.webp",
+
                 _id: "65f6fd204c4327f063440e59",
             },
             {
-                title: "Banner1",
+                title: "Banner3",
                 link: "https://dukaan.b-cdn.net/1440x1440/webp/upload_file_service/11ce5eba-e62a-41b0-93a4-7a34361b4740/image.png",
-                mobile: "https://dukaan.b-cdn.net/800x800/webp/upload_file_service/e7b49fea-f9e9-4e66-9302-0811f6669476/image.png",
+
 
                 _id: "65f6fd204c4327f063440e59",
             },
         ],
     };
+
+
 
     const getBusiness = async () => {
         // const res = await axiosInstance.get(
@@ -453,7 +472,10 @@ const DarkLightTemplate = () => {
         dispatch(setCurrTheme(bis.styles.uiMode))
         dispatch(setCurrFont(bis.styles.font));
         setIsLoading(false);
+        document.addEventListener("mouseup", () => setDraging(false))
     };
+
+
 
     // detructring all the styles 
 
@@ -478,13 +500,18 @@ const DarkLightTemplate = () => {
         }
     ];
 
+
+
+
+
     useEffect(() => {
         getBusiness();
         setNav1(featuredRef);
         setNav2(featuredRef1);
-        // window.onload = ()=>{
-        //     document.getElementById(bis.theme)?.style.cssText = `--slider-indicators: ${bis?.styles.primary}`;
-        // }
+        window.addEventListener('resize', handleWindowSizeChange);
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange);
+        }
 
     }, []);
 
@@ -492,9 +519,25 @@ const DarkLightTemplate = () => {
         setMenu(false)
     }
 
-    const handleTabScroll = () => {
+    const handleTabScroll = (direction) => {
         const container = document.getElementById("tab-container");
-        container.scrollLeft += window.innerWidth;
+        if (direction == "right") {
+            container.scrollLeft += container?.clientWidth
+        } else {
+            container.scrollLeft -= container?.clientWidth
+        }
+        setTimeout(() => {
+
+            setShowLeftTab(container.scrollLeft > 100)
+
+
+            if (container.scrollLeft >= container.scrollWidth - window.innerWidth) {
+                setShowRightTab(false)
+            } else {
+                setShowRightTab(true)
+            }
+        }, 500)
+
     }
 
     const SamplePrevArrow = (props) => {
@@ -755,9 +798,11 @@ const DarkLightTemplate = () => {
                     </section>
                 </nav>
 
-                {/* banner */}
 
-                <div className="md:my-4 relative">
+
+                {/* old banner  */}
+
+                {/* <div className="md:my-4 relative">
                     <Slider {...bannerSettings} ref={slider => {
                         sliderRef = slider;
                     }}>
@@ -767,12 +812,14 @@ const DarkLightTemplate = () => {
                                     <source media="(min-width:768px)" srcset={item.link} />
                                     <img src={item.mobile} alt="" />
                                 </picture>
+
+
                             ))
                         }
 
                     </Slider>
 
-                    {/* custum dots  */}
+
 
                     <div className="flex items-center justify-center gap-2 mt-2">
                         {
@@ -789,11 +836,17 @@ const DarkLightTemplate = () => {
                     <div className="absolute top-1/2 right-[3%] p-2 rounded-sm shadow-sm shadow-shadow cursor-pointer hidden md:block" style={{ background: primary, color: innerText }} onClick={() => sliderRef.slickNext()}>
                         <AiOutlineArrowRight size={20} />
                     </div>
-                </div>
+                </div> */}
 
+                {/* banner section  */}
 
-
-
+                <AwesomeSlider animation="foldOutAnimation" style={{ "--slider-height-percentage": width < 500 ? "30vh" : width < 1024 ? "50vh" : "80vh", "--control-bullet-active-color": primary, "--control-bullet-color": "#6a6a6a", "--organic-arrow-color": primary, "--loader-bar-color: #851515": primary }}>
+                    {
+                        business?.banners.map((item, index) => (
+                            <div key={index} data-src={item.link} />
+                        ))
+                    }
+                </AwesomeSlider>
                 {/* featured section  */}
                 {featured?.contentTitle != null && (
                     <div className=" mx-8 text-prime py-8 mt-16 relative flex flex-col-reverse md:flex-row justify-between md:px-8  items-center gap-8 rounded-3xl">
@@ -836,24 +889,66 @@ const DarkLightTemplate = () => {
 
 
                 <div className="mt-16 mx-8 mb-8">
-                    <div className="flex gap-2 items-center">
-                        <div className="flex grow gap-2 overflow-x-scroll scrollbar-hidden scroll-smooth" id="tab-container">
-                            <span className={clsx("border-[2px] border-border  text-base  inline-block px-4 py-1 rounded-full shrink-0 cursor-pointer")} onClick={() => setActiveTab("all")} style={activeTab === "all" ? { background: primary, color: innerText } : {}}>
+                    <div className="flex gap-2 sm:gap-4 items-center relative">
+
+                        {/* left arrow  */}
+
+                        {
+                            showLeftTab && (
+                                <div className="rounded-full cursor-pointer absolute left-0  -translate-x-[80%] top-1/2 -translate-y-1/2" style={{ background: primary }} onClick={() => handleTabScroll("left")}>
+                                    <FaChevronCircleRight size={30} className={`fill-white transition-all duration-300 rotate-180`} />
+                                </div>
+                            )
+                        }
+
+
+
+                        <div className={`flex grow gap-2 overflow-x-scroll scrollbar-hidden scroll-auto ${draging ? "scroll-auto" : "scroll-smooth cursor-grab"}`} onScroll={(e) => {
+                            setShowLeftTab(e.target.scrollLeft > 100);
+                            if (e.target.scrollLeft >= e.target.scrollWidth - window.innerWidth) {
+                                setShowRightTab(false)
+                            } else {
+                                setShowRightTab(true)
+                            }
+
+                        }}
+
+                            onMouseDown={() => {
+                                setDraging(true)
+                            }}
+
+                            onMouseMove={(e) => {
+                                if (!draging) return;
+                                e.target.scrollLeft -= e.movementX;
+                            }}
+
+
+                            id="tab-container">
+                            <span className={clsx("border-[2px] select-none border-border  text-base  inline-block px-4 py-1 rounded-full shrink-0 cursor-pointer")} onClick={() => setActiveTab("all")} style={activeTab === "all" ? { background: primary, color: innerText } : {}}>
                                 All
                             </span>
                             {
                                 business?.content?.map((item, index) => (
-                                    <span key={index} className={clsx(" text-base border-[2px] border-border   inline-block px-4 py-1 rounded-full shrink-0 cursor-pointer last:mr-12")} style={activeTab === item.category.toLowerCase() ? { background: primary, color: innerText } : {}} onClick={() => setActiveTab(item.category.toLowerCase())}>
+                                    <span key={index} className={clsx(" text-base border-[2px]  select-none border-border   inline-block px-4 py-1 rounded-full shrink-0 cursor-pointer last:mr-12")} style={activeTab === item.category.toLowerCase() ? { background: primary, color: innerText } : {}} onClick={() => setActiveTab(item.category.toLowerCase())}>
                                         {item.category}
                                     </span>
                                 ))
                             }
                         </div>
-                        <div className="h-full">
-                            <div className="bg-black  rounded-full cursor-pointer" onClick={handleTabScroll}>
-                                <FaChevronCircleRight size={30} className="fill-white" />
-                            </div>
-                        </div>
+
+                        {/* right arrow  */}
+
+                        {
+                            showRightTab && (
+                                <div className="rounded-full cursor-pointer absolute right-0 top-1/2 -translate-y-1/2 translate-x-[80%]" style={{ background: primary }} onClick={() => handleTabScroll("right")}>
+                                    <FaChevronCircleRight size={30} className={`fill-white transition-all duration-300 `} />
+                                </div>
+                            )
+                        }
+
+
+
+
                     </div>
 
                     <div className="slider-container relative mt-8">
@@ -944,20 +1039,34 @@ const DarkLightTemplate = () => {
 
                 <div className="my-12 md:my-16 mx-8 block">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative pb-16 md:pb-0">
-                        <div className="slider-container md:relative">
+
+                        <div className="slider-container md:relative" id="featured-slider-dlt">
                             <Slider arrows={false} beforeChange={(_, current) => setActiveSlide(current)} asNavFor={nav1} ref={slider => (featuredRef1 = slider)}>
                                 {
                                     featuredSectionData.map((item, index) => (
-                                        <div className="text-base">
+                                        <div className="text-base text-center pb-8" key={index}>
                                             <h1 className="text-2xl font-bold">Fun Moments.</h1>
-                                            <p className="mt-2 text-muted text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab eveniet in adipisci aspernatur quasi maxime quam veritatis, ratione amet quae?</p>
-                                            <button className="rounded-full px-4 py-2 bg-tertiary text-white mt-4 border-white border-2">Explore Now</button>
+                                            <p className="mt-2 text-muted text-lg capitalize">
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione veniam impedit ad, officiis libero consequuntur quam officia in ipsum! Sint distinctio ducimus labore tempore. Ab, esse beatae tempore pariatur ipsum, nobis natus adipisci velit error facilis nesciunt nihil autem! Saepe eos delectus consequuntur aut dolor, autem eius tempore quis neque.
+                                            </p>
                                         </div>
                                     ))
                                 }
                             </Slider>
+                        </div>
 
-                            <div className="flex items-center justify-center gap-4 mt-8 absolute md:bottom-[5%] bottom-0 w-full z-10">
+
+                        <div className="rounded-md relative">
+                            <Slider arrows={false} asNavFor={nav2} ref={slider => {
+                                featuredRef = slider;
+                            }}>
+                                {
+                                    featuredSectionData.map((item, index) => (
+                                        <img className="w-full h-full object-cover aspect-video" src={item.image} alt="" />
+                                    ))
+                                }
+                            </Slider>
+                            <div className="flex items-center justify-center gap-4 mt-8  w-full z-10">
                                 {
                                     featuredSectionData.map((item, index) => (
 
@@ -967,17 +1076,6 @@ const DarkLightTemplate = () => {
                                     ))
                                 }
                             </div>
-                        </div>
-                        <div className="rounded-md overflow-hidden">
-                            <Slider asNavFor={nav2} ref={slider => {
-                                featuredRef = slider;
-                            }}>
-                                {
-                                    featuredSectionData.map((item, index) => (
-                                        <img className="w-full h-full object-cover aspect-video" src={item.image} alt="" />
-                                    ))
-                                }
-                            </Slider>
                         </div>
                     </div>
 

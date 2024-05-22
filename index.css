@@ -677,9 +677,9 @@ body {
   --background: 222, 83%, 5%;
   --text-base: 0, 0%, 100%;
   --text-muted: 213, 27%, 84%;
-  --text-inverted:  0, 0%, 100%;
+  --text-inverted: 0, 0%, 100%;
   --card: 222, 73%, 10%;
-  --shadow:  0, 0%, 100%;
+  --shadow: 0, 0%, 100%;
   --border: 0, 0%, 100%;
   --overlay: 234, 45%, 56%, .6;
   --background-inverted: 0, 0%, 100%;
@@ -715,6 +715,13 @@ body {
 
 .scrollbar-hidden::-webkit-scrollbar {
   display: none;
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 
@@ -974,7 +981,36 @@ body {
   display: none;
 }
 
+#featured-slider-dlt .slick-slider,
+#featured-slider-dlt .slick-track,
+#featured-slider-dlt .slick-list,
+#featured-slider-dlt .slick-slide {
+  height: 100%;
+}
 
+#featured-slider-dlt .slick-slide>div {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* awsome slider css  */
+.awssld__content>img {
+  object-fit: cover;
+}
+
+.awssld__bullets button {
+  width: 10px;
+  height: 10px;
+}
+
+
+/* .awssld {
+  max-height: calc(100vh - 74px);
+  overflow: hidden;
+} */
 
 
 @media (min-width:768px) {
