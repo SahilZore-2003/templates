@@ -31,6 +31,10 @@ import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
 import { Collapse } from "react-collapse";
 import CustomSlider from "../../components/CustomSlider"
 import { InView } from "react-intersection-observer";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import AwesomeSlider from 'react-awesome-slider';
+import "react-awesome-slider/dist/styles.css";
+import 'react-awesome-slider/dist/custom-animations/fold-out-animation.css';
 
 
 
@@ -46,8 +50,10 @@ const SixthTemplateHome = () => {
     const [open, setOpen] = useState(false)
     let sliderRef = useRef(null);
     let testSliderRef = useRef(null);
+    let featuredSliderRef = useRef(null)
     const [activeSlide, setActiveSlide] = useState(0);
     const [testActiveSlide, setTestActiveSlide] = useState(0);
+    const [featuredActiveSlide, setFeaturedActiveSlide] = useState(0);
     const [showSlides, setShowSlides] = useState(1)
     const [activeFaq, setActiveFaq] = useState(0)
     const [stickNav, setStickNav] = useState(false)
@@ -92,6 +98,32 @@ const SixthTemplateHome = () => {
         updatedAt: "2024-03-18T07:23:36.394Z",
         __v: 0,
         theme: "schooltheme",
+        featuredContents: [
+            {
+                "title": "Visual Designs & Art Director",
+                "description": "Lorem Ipsum, Dolor Sit Amet Consectetur Adipisicing Elit. Optio Eaque, Commodi In Tempore Ipsa Expedita Facere Voluptatum Odit Accusantium Deleniti.",
+                "image": "https://images01.nicepagecdn.com/c461c07a441a5d220e8feb1a/3b51555cfc1f5bf58c84e059/x-min.png",
+                "CtaName": "Apply Now",
+                "CtaLink": "www.google.com",
+                "_id": "6645a1bb0ffcc96fe8badb39"
+            },
+            {
+                "title": "Test content two of featured section",
+                "description": "Lorem Ipsum, Dolor Sit Amet Consectetur Adipisicing Elit. Optio Eaque, Commodi In Tempore Ipsa Expedita Facere Voluptatum Odit Accusantium Deleniti.",
+                "image": "http://res.cloudinary.com/dwmwpmrpo/image/upload/v1715769399/imcxnsrltfz698iq3r8g.png",
+                "CtaName": "Apply",
+                "CtaLink": "www.google.com",
+                "_id": "6645a1fe0ffcc96fe8badb64"
+            },
+            {
+                "title": "Featured",
+                "description": "description",
+                "image": "https://img.freepik.com/free-photo/university-student-laptop-e-learning-concept_23-2148550676.jpg?size=626&ext=jpg&ga=GA1.1.1109326158.1697181750&semt=sph",
+                "CtaName": "Apply",
+                "CtaLink": "www.google.com",
+                "_id": "6645a2620ffcc96fe8badb90"
+            }
+        ],
         styles: {
             font: "Roboto",
             gradient: {
@@ -102,7 +134,16 @@ const SixthTemplateHome = () => {
             innerText: "#ffffff",
             primary: "#5c66c1",
             secondary: "#eab308",
-            uiMode: "snowfall"
+            uiMode: "charcoal"
+        },
+        dataSlate: {
+            "title": "We created own Digital transform methodlogy.",
+            "dataName1": "Monthly Users",
+            "value1": "50000",
+            "dataName2": "Customers",
+            "value2": "3Cr+",
+            "dataName3": "Happy Customers",
+            "value3": "100000"
         },
         categories: ["coding", "design"],
         content: [
@@ -459,10 +500,29 @@ const SixthTemplateHome = () => {
         banners: [
             {
                 title: "Banner1",
-                link: "https://bridgeyu.s3.ap-south-1.amazonaws.com/BridgeYue55f667a86e2bbf02160f0d4b6e07716.jpeg",
+                link: "https://img.freepik.com/free-photo/university-student-laptop-e-learning-concept_23-2148550676.jpg?size=626&ext=jpg&ga=GA1.1.1109326158.1697181750&semt=sph",
+                _id: "65f6fd204c4327f063440e59",
+            },
+            {
+                title: "Banner2",
+                link: h2,
                 _id: "65f6fd204c4327f063440e59",
             },
         ],
+        "faq": [
+            {
+                "question": "What are some good FAQ questions?",
+                "answer": "Some common examples include questions about service hours, shipping and handling, product details, return policies, etc., depending on the industry. You can have different FAQ sections for different pages of your website. Your FAQ page demonstrates how well you understand your customers."
+            },
+            {
+                "question": "How do you answer FAQ questions?",
+                "answer": "What is General FAQ? It is a collection of common questions and answers not specific to a product, feature, or service. They usually cover payment policies, how to contact customer support, and refund policies."
+            },
+            {
+                "question": "Why is FAQ important?",
+                "answer": "Visitors will primarily use your site menus to navigate through your site, but an FAQ page can also serve as a way to point them where they need to go—whether that's a product page, a whitepaper, or a blog post they might not have found otherwise."
+            }
+        ]
     };
 
     const setHtmlWithStyle = (htmlString, className = "") => {
@@ -513,6 +573,8 @@ const SixthTemplateHome = () => {
             name: "Alex T.",
         },
     ];
+
+
 
     const getBusiness = async () => {
         // const res = await axiosInstance.get(
@@ -584,21 +646,7 @@ const SixthTemplateHome = () => {
         { name: "Github", icon: FaGithub, link: "https://github.com/" },
     ];
 
-    const counterData = [
-        {
-            count: 100,
-            title: "Monthly Users"
-        },
-        {
-            count: 50,
-            title: "New Audience"
-        },
-        {
-            count: 200,
-            title: "satisfied Customers"
-        },
 
-    ]
 
 
     const settings = {
@@ -669,16 +717,7 @@ const SixthTemplateHome = () => {
         },
     ]
 
-    const images = [
-        {
-            imgURL: "https://img.freepik.com/free-photo/university-student-laptop-e-learning-concept_23-2148550676.jpg?size=626&ext=jpg&ga=GA1.1.1109326158.1697181750&semt=sph",
-            imgAlt: "img-1"
-        },
-        {
-            imgURL: h2,
-            imgAlt: "img-2"
-        }
-    ];
+
 
 
 
@@ -736,18 +775,13 @@ const SixthTemplateHome = () => {
 
 
 
-
-
-
-
-
             {/* home banner section  */}
 
             <div div className=" md:flex items-center min-h-screen px-4 py-4 pb-8 justify-around" id="header-section" style={{ background: primary }} >
                 <div className="basis-[40%]">
                     <CustomSlider color={primary}>
-                        {images.map((image, index) => {
-                            return <img key={index} src={image.imgURL} alt={image.imgAlt} />;
+                        {business?.banners?.map((image, index) => {
+                            return <img key={index} src={image?.link} alt={image?.title} />;
                         })}
                     </CustomSlider>
                 </div>
@@ -784,7 +818,7 @@ const SixthTemplateHome = () => {
                                     {featured.price}
                                 </div>
                                 <span className=" rounded-full mt-6 px-2 py-2 inline-block" style={{ background: primary }}>
-                                    <Link className="flex gap-4 rounded-full font-bold px-4 py-2 w-fit items-center group border-[3px] border-border border-dashed"
+                                    <Link className="flex gap-4 rounded-full font-bold px-4 py-2 w-fit items-center group"
                                         style={{ background: primary, color: innerText }}
                                         onClick={() => {
                                             dispatch(setContent(featured))
@@ -924,7 +958,7 @@ const SixthTemplateHome = () => {
 
                 {/* counter  */}
 
-                <div className="my-12 rounded-3xl mx-8 py-4 overflow-hidden px-4" style={{ background: primary }}>
+                {/* <div className="my-12 rounded-3xl mx-8 py-4 overflow-hidden px-4" style={{ background: primary }}>
                     <h1 className="text-xl md:text-4xl font-bold mb-8 text-center my-4 overflow-hidden text-inverted">We created own Digital transform methodlogy.</h1>
 
                     <div className="my-8 flex flex-col sm:flex-row flex-wrap gap-8 justify-between sm:gap-0">
@@ -944,7 +978,66 @@ const SixthTemplateHome = () => {
                         }
 
                     </div>
+                </div> */}
+
+                {/* new counter  */}
+
+                <div className=" text-inverted my-8 px-8 py-8 lg:py-12 lg:grid grid-cols-5" style={{ background: primary }}>
+                    <h1 className="font-bold text-2xl lg:col-span-2">{business?.dataSlate?.title}</h1>
+                    <div className="my-8 lg:my-0 flex lg:col-span-3 gap-6 flex-wrap justify-between">
+
+                        {
+                            Array.from({ length: 3 }).map((item, index) => (
+                                business?.dataSlate[`value${index + 1}`] ?
+                                    <InView triggerOnce={true} threshold={.5}>
+                                        {
+                                            ({ ref, inView }) => (
+                                                <div ref={ref} className={clsx("font-bold transition-all duration-500 basis-[40%] sm:basis-[25%] w-fit py-2 relative before:absolute before:h-[2px] before:bg-white before:w-0 before:top-0 before:left-0 before:transition-all before:duration-500", inView && "before:w-1/2")}>
+                                                    <h1 className={clsx("text-2xl transition-all duration-500 ", inView ? "translate-y-0" : "translate-y-1/2")}>
+                                                        {
+                                                            isNaN(Number(business?.dataSlate[`value${index + 1}`])) ? business?.dataSlate[`value${index + 1}`] : <Counter end={Number(business?.dataSlate[`value${index + 1}`])} />
+                                                        }
+
+                                                    </h1>
+                                                    <p className={clsx("uppercase text-sm font-semibold transition-all duration-500 ", inView ? "translate-y-0" : "translate-y-1/2")}>{business?.dataSlate[`dataName${index + 1}`]}</p>
+                                                </div>
+                                            )
+                                        }
+
+                                    </InView> : null
+                            ))
+                        }
+
+
+
+                        {/* <InView triggerOnce={true} threshold={.5}>
+                            {
+                                ({ ref, inView }) => (
+                                    <div ref={ref} className={clsx("font-bold transition-all duration-500 basis-[40%] sm:basis-[25%] w-fit py-2 relative before:absolute before:h-[2px] before:bg-white before:w-0 before:top-0 before:left-0 before:transition-all before:duration-500", inView && "before:w-1/2")}>
+                                        <h1 className={clsx("text-2xl transition-all duration-500 ", inView ? "translate-y-0" : "translate-y-1/2")}>{business?.dataSlate?.value2}</h1>
+                                        <p className={clsx("uppercase text-sm font-semibold transition-all duration-500 ", inView ? "translate-y-0" : "translate-y-1/2")}>{business?.dataSlate?.dataName2}</p>
+                                    </div>
+                                )
+                            }
+
+                        </InView>
+
+                        <InView triggerOnce={true} threshold={.5}>
+                            {
+                                ({ ref, inView }) => (
+                                    <div ref={ref} className={clsx("font-bold transition-all duration-500 basis-[40%] sm:basis-[25%] w-fit py-2 relative before:absolute before:h-[2px] before:bg-white before:w-0 before:top-0 before:left-0 before:transition-all before:duration-500", inView && "before:w-1/2")}>
+                                        <h1 className={clsx("text-2xl transition-all duration-500 ", inView ? "translate-y-0" : "translate-y-1/2")}>{business?.dataSlate?.value3}</h1>
+                                        <p className={clsx("uppercase text-sm font-semibold transition-all duration-500 ", inView ? "translate-y-0" : "translate-y-1/2")}>{business?.dataSlate?.dataName3}</p>
+                                    </div>
+                                )
+                            }
+
+                        </InView> */}
+
+                    </div>
                 </div>
+
+
 
                 {/* faqs  */}
 
@@ -952,16 +1045,16 @@ const SixthTemplateHome = () => {
                     <h1 className="text-base text-center text-xl font-bold mb-4">Frequntly Ask Qstions</h1>
                     <div className="max-w-[800px] mx-auto">
                         {
-                            faqs.map((item, index) => (
+                            business?.faq.map((item, index) => (
                                 <div key={index} className={"p-4 rounded-xl cursor-pointer"} style={index == activeFaq ? { background: primary } : {}}>
                                     <div className="flex" onClick={() => setActiveFaq(index)}>
-                                        <h2 className={`grow text-base ${activeFaq == index && "text-inverted"}`}>{item.qustion}</h2>
+                                        <h2 className={`grow text-base ${activeFaq == index && "text-inverted"}`}>{item?.question}</h2>
                                         {
                                             index == activeFaq ? <FiMinusCircle size={20} className="text-inverted" /> : <FiPlusCircle size={20} className="text-base" />
                                         }
                                     </div>
                                     <Collapse isOpened={index == activeFaq}>
-                                        <p className="mt-2 text-inverted">{item.answer}</p>
+                                        <p className="mt-2 text-inverted">{item?.answer}</p>
                                     </Collapse>
                                 </div>
                             ))
@@ -971,86 +1064,72 @@ const SixthTemplateHome = () => {
 
                 {/* section  */}
 
-                <div style={{ background: `linear-gradient(225deg, ${from} 30%, ${to} 100%)` }}>
 
 
-                    <div className="my-12 pt-12 pb-0 px-4  flex flex-col gap-8 md:flex-row md:justify-around items-center">
-                        <InView triggerOnce={true}>
-                            {
-                                ({ ref, inView }) => (
-                                    <div ref={ref} className={`text-base text-center  transition-all duration-500 md:basis-[40%] ${inView ? "-translate-x-0" : "-translate-x-full"}`}>
-                                        <h1 className="font-semibold text-3xl">Visual Designs & Art Director</h1>
-                                        <p className="text-xl mt-4 capitalize">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio eaque, commodi in tempore ipsa expedita facere voluptatum odit accusantium deleniti.</p>
-                                    </div>
-                                )
-                            }
-                        </InView>
+                <div style={{ background: `linear-gradient(225deg, ${from} 30%, ${to} 100%)` }} className="py-12 ">
 
-                        <div className="relative flex items-center justify-center md:basis-[30%]">
-                            <div className="relative w-[90%] overflow-hidden">
-                                <InView triggerOnce={true}>
-                                    {
-                                        ({ inView, ref }) => (
-                                            <div ref={ref} style={{ background: primary }} className={`absolute inset-0 aspect-square rounded-full transition-all duration-500 ${inView ? "scale-100" : "scale-0"}`}>
-                                            </div>
-                                        )
-                                    }
-                                </InView>
-
-                                <InView triggerOnce={true} >
-                                    {
-                                        ({ inView, ref }) => (
-                                            <img ref={ref} className={`relative z-10 transition-all duration-500 ${inView ? "translate-y-0" : "translate-y-full"}`} src="https://images01.nicepagecdn.com/c461c07a441a5d220e8feb1a/3b51555cfc1f5bf58c84e059/x-min.png" alt="" />
-                                        )
-                                    }
-                                </InView>
+                    <div className="bg-background mx-8 relative rounded-md shadow-md shadow-shadow grid grid-cols-1 [@media(min-width:900px)]:grid-cols-2 lg:max-w-[80%] lg:mx-auto">
 
 
-                            </div>
+                        <div className="flex items-center justify-center py-8 text-center">
+                            <AwesomeSlider style={{ "--content-background-color": "hsl(var(--background))" }} selected={featuredActiveSlide} bullets={false} organicArrows={false} animation="foldOutAnimation">
+                                {
+                                    business?.featuredContents?.map((item, index) => (
+                                        <div key={index} className={`p-4 left-0 w-full flex flex-col justify-center gap-2 custom-transition text-base `}>
+                                            <h1 className="text-2xl">{item?.title}</h1>
+                                            <p className="text-muted">{item?.description}</p>
+                                            <a href={item?.CtaLink} className="px-4 py-2 rounded-sm w-fit inline-block mx-auto" style={{ background: primary, text: innerText }}>{item?.CtaName}</a>
 
-
-                        </div>
-                    </div>
-
-                    <div className="my-12 pt-12 pb-0 px-4 text-base flex flex-col gap-8 md:flex-row md:justify-around items-center" >
-
-
-                        <div className="relative flex items-center justify-center md:basis-[30%]">
-                            <div className="relative w-[90%] overflow-hidden">
-                                <InView triggerOnce={true}>
-                                    {
-                                        ({ inView, ref }) => (
-                                            <div ref={ref} className={`absolute inset-0 aspect-square bg-tertiary rounded-full transition-all duration-500 ${inView ? "scale-100" : "scale-0"}`}>
-                                            </div>
-                                        )
-                                    }
-                                </InView>
-
-                                <InView triggerOnce={true} >
-                                    {
-                                        ({ inView, ref }) => (
-                                            <img ref={ref} className={`relative z-10 transition-all duration-500 ${inView ? "translate-y-0" : "translate-y-full"}`} src="http://res.cloudinary.com/dwmwpmrpo/image/upload/v1715769399/imcxnsrltfz698iq3r8g.png" alt="" />
-                                        )
-                                    }
-                                </InView>
-                            </div>
-
-
+                                        </div>
+                                    ))
+                                }
+                            </AwesomeSlider>
                         </div>
 
-                        <InView triggerOnce={true}>
-                            {
-                                ({ ref, inView }) => (
-                                    <div ref={ref} className={`text-base text-center  transition-all duration-500 md:basis-[40%] ${inView ? "-translate-x-0" : "-translate-x-full"}`}>
-                                        <h1 className="font-semibold text-3xl">Visual Designs & Art Director</h1>
-                                        <p className="text-xl mt-4 capitalize">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio eaque, commodi in tempore ipsa expedita facere voluptatum odit accusantium deleniti.</p>
-                                    </div>
-                                )
-                            }
-                        </InView>
+                        <div className="w-full h-full relative">
+                            <Slider
+                                arrows={false}
+                                ref={slider => {
+                                    featuredSliderRef = slider;
+                                }}
+                                beforeChange={
+                                    (current, next) => {
+
+                                        setFeaturedActiveSlide(next);
+                                    }
+                                }
+
+                                infinite={true}
+
+                            >
+                                {
+                                    business?.featuredContents?.map((item, index) => (
+                                        <img className="w-full h-full object-contain aspect-square" src={item?.image} key={index} alt="" />
+                                    ))
+                                }
+                            </Slider>
+                            <div className="flex gap-2 absolute bottom-[2%] -translate-x-1/2 left-1/2">
+                                {
+                                    business?.featuredContents?.map((item, index) => (
+                                        <span key={index} className="inline-block size-2 rounded-full bg-background cursor-pointer" style={index === featuredActiveSlide ? { background: primary } : {}} onClick={() => featuredSliderRef.slickGoTo(index)}></span>
+                                    ))
+                                }
+                            </div>
+                        </div>
+
+
+
+                        <MdKeyboardArrowLeft size={60} className="absolute top-1/2 -translate-x-[80%] left-0 text-background cursor-pointer -translate-y-1/2 rounded-full custom-transition hover:scale-125 hidden [@media(min-width:900px)]:block" onClick={() => featuredSliderRef.slickPrev()} />
+
+                        <MdKeyboardArrowRight className="absolute top-1/2 translate-x-[80%] right-0 text-background cursor-pointer -translate-y-1/2  rounded-full  custom-transition hover:scale-125 hidden [@media(min-width:900px)]:block" onClick={() => featuredSliderRef.slickNext()} size={60} />
+
                     </div>
 
                 </div>
+
+
+
+
 
                 {/* footer */}
                 <footer className="mt-8 py-12 px-4">
