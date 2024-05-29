@@ -6,7 +6,7 @@ const StarRating = ({ rating, color }) => {
 
   // Round the rating to the nearest half
   const roundedRating = Math.round(rating * 2) / 2;
-  
+
 
   return (
     <div className="flex flex-row items-center">
@@ -14,7 +14,7 @@ const StarRating = ({ rating, color }) => {
         return (
           <div key={id}>
             {item < rating ? (
-              <FaStar size={12} className="fill-tertiary" style={{ fill: color }} />
+              <FaStar size={12} className="" style={{ fill: color }} />
             ) : (
               <FaRegStar size={12} className="fill-base" />
             )}

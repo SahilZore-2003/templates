@@ -710,8 +710,8 @@ body {
   --background-inverted: 213, 73%, 97%;
   --slider-indicators: #2574f5;
   --slider-indicators-muted: #8eb4e6;
-  --primary:#000;
-  --secondary:#000;
+  --primary: #000;
+  --secondary: #000;
 }
 
 #second-theme[data-theme="charcoal"] {
@@ -726,9 +726,42 @@ body {
   --background-inverted: 213, 73%, 97%;
   --slider-indicators: #2574f5;
   --slider-indicators-muted: #8eb4e6;
-  --primary:#000;
-  --secondary:#000;
+  --primary: #000;
+  --secondary: #000;
 }
+
+#third-theme[data-theme="snowfall"] {
+  --background: 0, 0%, 100%;
+  --text-base: 217, 46%, 12%;
+  --text-muted: 216, 11%, 45%;
+  --text-inverted: 0, 0%, 100%;
+  --card: 260, 7%, 82%;
+  --shadow: 0, 0%, 89%;
+  --border: 0, 0%, 0%;
+  --overlay: 214, 73%, 49%, 0.4;
+  --background-inverted: 220, 84%, 5%;
+  --slider-indicators: #2574f5;
+  --slider-indicators-muted: #8eb4e6;
+  --primary: #000;
+  --secondary: #000;
+}
+
+#third-theme[data-theme="charcoal"] {
+  --background: 222, 83%, 5%;
+  --text-base: 0, 0%, 100%;
+  --text-muted: 213, 27%, 84%;
+  --text-inverted: 0, 0%, 0%;
+  --card: 222, 73%, 10%;
+  --shadow: 0, 0%, 25%;
+  --border: 0, 0%, 100%;
+  --overlay: 214, 73%, 49%, 0.4;
+  --background-inverted: 0, 0%, 100%;
+  --slider-indicators: #2574f5;
+  --slider-indicators-muted: #8eb4e6;
+  --primary: #000;
+  --secondary: #000;
+}
+
 
 
 @layer base {
@@ -1055,4 +1088,24 @@ body {
     gap: 30px;
     margin-left: 0;
   }
+}
+
+
+/* thid template css  */
+
+.wrap-original-transform {
+  perspective: 2000px;
+  transform-style: preserve-3d;
+  perspective-origin: 50% 50%;
+}
+
+
+.circle-clip {
+  clip-path: circle(0% at 0 50%);
+}
+
+.circle-clip.active {
+  clip-path: circle(150% at 0% 50%);
+  transition: 2s ease;
+  transition-property: clip-path;
 }
